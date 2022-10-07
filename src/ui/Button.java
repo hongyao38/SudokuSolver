@@ -35,6 +35,28 @@ public abstract class Button extends JComponent {
         this.addMouseMotionListener(mouse);
     }
 
+    public void enlarge() {
+        // Enlarge the cell
+        x -= 4;
+        y -= 4;
+        width += 8;
+        height += 8;
+
+        // Change cursor
+        ap.ui.cursorImg = 2 + 20;
+    }
+
+    public void shrink() {
+        // Return to original size
+        x += 4;
+        y += 4;
+        width -= 8;
+        height -= 8;
+
+        // Change cursor
+        ap.ui.cursorImg = 1 + 20;
+    }
+
     public abstract void onLeftClick();
 
     public abstract void onRightClick();
@@ -48,24 +70,10 @@ public abstract class Button extends JComponent {
     }
 
     public void onMouseEnter() {
-        // Enlarge the cell
-        x -= 4;
-        y -= 4;
-        width += 8;
-        height += 8;
-
-        // Change cursor
-        ap.ui.cursorImg = 2 + 20;
+        enlarge();
     };
 
     public void onMouseExit() {
-        // Return to original size
-        x += 4;
-        y += 4;
-        width -= 8;
-        height -= 8;
-
-        // Change cursor
-        ap.ui.cursorImg = 1 + 20;
+        shrink();
     };
 }

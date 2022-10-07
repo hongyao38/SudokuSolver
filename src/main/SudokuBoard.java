@@ -12,6 +12,7 @@ public class SudokuBoard {
     // Board
     public Cell[][] board = new Cell[9][9];
     public Cell selectedCell;
+    public Cell hoverOverCell;
 
     public SudokuBoard(AppPanel ap) {
         this.ap = ap;
@@ -31,10 +32,12 @@ public class SudokuBoard {
 
         // Create solve button
         solveButton = new MenuButton(11 * ap.tileSize, 9 * ap.tileSize, 2 * ap.tileSize, ap.tileSize, ap);
+        solveButton.number = 25;
         this.ap.add(solveButton);
 
         // Create reset button
         resetButton = new MenuButton(11 * ap.tileSize, 7 * ap.tileSize, 2 * ap.tileSize, ap.tileSize, ap);
+        resetButton.number = 26;
         this.ap.add(resetButton);
     }
 

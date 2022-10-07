@@ -16,6 +16,9 @@ public class uiDrawer {
     private int prevCursor = 21;
     private Cursor customCursor;
 
+    // Hover Over Cell
+    private Cell hoverOverCell;
+
     // UI image libary
     private BufferedImage[] imgs = new BufferedImage[30];
     private int imgCounter;
@@ -64,7 +67,11 @@ public class uiDrawer {
             customCursor = Toolkit.getDefaultToolkit().createCustomCursor(imgs[cursorImg], new Point(0, 0), "custom cursor");
             ap.setCursor(customCursor);
         }
+
+        // Update hover over cell
+        hoverOverCell = ap.board.hoverOverCell;
     }
+
 
     public void addImage(String imageFilePath) {
         BufferedImage newImg = null;
@@ -74,6 +81,7 @@ public class uiDrawer {
 
         imgs[imgCounter++] = newImg;
     }
+
 
     public void drawBoard(Graphics2D g2, SudokuBoard sudokuBoard) {
         Cell[][] board = sudokuBoard.board;
@@ -93,26 +101,34 @@ public class uiDrawer {
 
         // Draw selected cell above
         if (ap.board.selectedCell != null) {
-            Cell c = ap.board.selectedCell;
-            g2.drawImage(imgs[c.number], c.x, c.y, c.width, c.height, null);
+            drawButton(g2, ap.board.selectedCell);
+        }
+
+        // Draw hover over cell above
+        if (hoverOverCell != null) {
+            Cell c = hoverOverCell;
+            int imgNum = hoverOverCell.number;
+            if (hoverOverCell.isFixed) imgNum += 10;
+            g2.drawImage(imgs[imgNum], c.x, c.y, c.width, c.height, null);
         }
     }
 
-    public void drawMenuButtons(Graphics2D g2) {
-        // Draw SOLVE button
-        MenuButton button = ap.board.solveButton;
+
+    private void drawButton(Graphics2D g2, Button button) {
         int x = button.x;
         int y = button.y;
         int width = button.width;
         int height = button.height;
-        g2.drawImage(imgs[25], x, y, width, height, null);
+        int imgNum = button.number;
+        g2.drawImage(imgs[imgNum], x, y, width, height, null);
+    }
+
+
+    public void drawMenuButtons(Graphics2D g2) {
+        // Draw SOLVE button
+        drawButton(g2, ap.board.solveButton);
 
         // Draw RESET button
-        button = ap.board.resetButton;
-        x = button.x;
-        y = button.y;
-        width = button.width;
-        height = button.height;
-        g2.drawImage(imgs[26], x, y, width, height, null);
+        drawButton(g2, ap.board.resetButton);
     }
 }

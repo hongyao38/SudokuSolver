@@ -23,6 +23,18 @@ public class Cell extends Button {
         resetCandidates();
     }
 
+    @Override
+    public void onMouseEnter() {
+        enlarge();
+        ap.board.hoverOverCell = this;
+    }
+
+    @Override
+    public void onMouseExit() {
+        shrink();
+        ap.board.hoverOverCell = null;
+    }
+
     public void onLeftClick() {
         // If cell is already fixed
         if (this.isFixed) {
